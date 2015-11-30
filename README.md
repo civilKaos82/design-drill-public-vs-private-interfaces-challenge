@@ -29,71 +29,51 @@ Objects can also have a *private interface*—methods accessible only within the
 This [blog post][] provides a description of public and private methods, as well as a walk through for defining methods as private.
 
 
-##Releases
+## Releases
+### Release 0: Represent a Bank Account
+```ruby
+account = BankAccount.new("Junipero Serra", "Checking", "347-923-239")
+# => #<BankAccount:0x0000010124d1f8 @customer_name="Junipero Serra", @type="Checking", @account_number="347-923-239">
+```
+*Figure 2*.  Initializing a bank account object with a customer name, an account type, and an account number.
 
-###Release 0 : Initialize It
+We'll begin by defining the class `BankAccount`.  As seen in Figure 1, we should be able to create a new instance of the class by supplying a customer name, an account type, and an account number.  These three pieces of data represent the internal state of an instance of our class.
 
-Define the class `BankAccount`.
 
-It should have three instance variables: `@customer_name`, `@type`, and `@acct_number`.
+### Release 1:  Accessor Methods
+What do we want our `BankAccount` class's public interface to look like? How much of our object's internal state do we want to expose?  Do we want any of its attributes to be readable? What about writable?
 
-Define an `initialize` method that takes three arguments and assigns them to the above instance variables.  It should look something like this:
+Normally, we would let the needs of our application drive our decision making.  As this is a drill, let's make some reasoned speculative choices, and create any appropriate attribute accessor methods.
+
+We might ask ourselves ... would we ever need to change the name associated with a bank account?  Would we change the type of an account?  Would we want to reveal an account number?  Think through whether we would want a reader and/or a writer method for each of our object's attributes.
+
+Remember, our object's public interface defines what an object does, and we'll want to document that behavior in tests.
+
+
+### Release 2:  Customized Attribute Values
+Standard reader methods will return the value of an attribute.  Writer methods will update the value of an attribute.  But, we can also customize accessor methods.
 
 ```ruby
-my_acct = BankAccount.new("Junipero Serra", "Checking", "347-923-239")
+account = BankAccount.new("Junipero Serra", "Checking", "347-923-239")
+# => #<BankAccount:0x0000010124d1f8 @customer_name="Junipero Serra", @type="Checking", @account_number="347-923-239">
+account.account_number
+# => "***-***-239"
 ```
+*Figure 3*. A customized reader method that hides part of an account number.
 
-###Release 1: Add Functionality
-
-####Redefine to_s
-
-One more requirement: define an instance method `to_s` that will return a string with information about the account.
-
-You will probably come across other classes in Ruby that redefine the built-in method `to_s`.  This is an easy way to display relevant information about an object to the user, and to control which information is conveyed.
-
-As an example, here is one way to display object information:
+In our bank account example, we might have decided not to expose a bank account's account number.  However, we could also choose to expose the account number with part of it hidden (see Figure 3).
 
 ```ruby
-my_acct.to_s
-# => "Junipero Serra: Checking# *****3239"
+account.customer_name = "JuNiPeRo D. sErRa"
+account.customer_name
+# => "JUNIPERO D. SERRA"
 ```
+*Figure 4*. A customize writer method that converts a value to all caps before assigning it.
 
-Once you define `to_s`, you can interpolate your objects in strings like this:
+We might want to do something similar in a writer method.  We could choose that customer names should be stored in all caps.  If we then choose to make the customer name attribute writable, we might need to clean a new value before assigning it to our object (see Figure 4).
 
-```ruby
-str = "My account information is #{my_acct}"
-# => "My account information is Junipero Serra: Checking# *****3239"
-```
+Let's modify our `BankAccount` class to have the behaviors described above.  As we're changing the behavior of our classes, our tests will need to be updated to match.  
 
-Write a test for `to_s` to make sure it works as you expect.
-
-#### Define getter methods
-
-When you create a new instance of `BankAccount`, do you have access to any of the values stored in its instance variables?  No?  Good.
-
-The way we get read access to variables stored within a class is through a pattern called a *getter method*.
-
-Which of the instance variables should have associated *getter* methods?
-
-Think about the implications behind defining a getter method.  Which variables should expose themselves in this way?  Which values should be hidden and protected from the outside world?
-
-Write tests for your getter methods.
-
-#### Define setter methods
-
-Now think about which variables should be able to be *written* to.
-
-Then define your setter method(s) and write tests.
-
-#### Hide the account
-
-You probably recognized that it might not be a good idea to expose the account number via a getter or setter method.  That is just the kind of information that should remain private.
-
-Sometimes, though, it is useful to expose part of a value.  If a user has many checking accounts, then it might be useful to display some kind of information that allows them to distinguish between the accounts without seeing the full account number.
-
-How would you get around this problem?  What kind of method can you define that will return enough information about the account to be able to distinguish it from other accounts, without exposing the full number?
-
-And, of course, you know what's coming... write tests!
 
 ##Resources
 
