@@ -20,9 +20,9 @@ aisha.name
 ```  
 *Figure 1*.  Calling methods on objects, using methods from their public interfaces.
 
-We can think of methods to which an object responds as messages that it understands.  When we create a reader methods that returns an object's name attribute, it's equivalent to being able to send the object a message asking for its name.  The same is true for any method that we call on an object—whether that's asking a person object for its name or asking a string to reverse itself (see Figure 1).
+We can think of methods to which an object responds as messages that it understands.  When we create a reader method that returns an object's name attribute, it's equivalent to being able to send the object a message asking for its name.  The same is true for any method that we call on an object—whether that's asking a person object for its name or asking a string to reverse itself (see Figure 1).
 
-Together, all the methods that we can call on an object make up the object's *public interface*, or the messages we can send to the object.  This interface expresses to other developers using our code the behaviors they can expect to rely on—in other words, *what* our object does.  For example, ask a person object for its name, and it will return a string.
+Together, all the messages we can send to the object make up the object's *public interface*.  This interface expresses to other developers using our code the behaviors they can expect to rely on—in other words, *what* our object does.  For example, ask a person object for its name, and it will return a string.
 
 Objects can also have a *private interface*—methods accessible only within the object itself.  Private methods are important for *how* an object does what it does; they help an object carry out its responsibilities.  For example, we might create private methods as we refactor a public method, extracting some of its behavior into smaller, more-focused private methods.  
 
@@ -35,7 +35,7 @@ This [blog post][] provides a description of public and private methods, as well
 account = BankAccount.new("Junipero Serra", "Checking", "347-923-239")
 # => #<BankAccount:0x0000010124d1f8 @customer_name="Junipero Serra", @type="Checking", @account_number="347-923-239">
 ```
-*Figure 2*.  Initializing a bank account object with a customer name, an account type, and an account number.
+*Figure 2*.  Instantiating a bank account object with a customer name, an account type, and an account number.
 
 We'll begin by defining the class `BankAccount`.  As seen in Figure 1, we should be able to create a new instance of the class by supplying a customer name, an account type, and an account number.  These three pieces of data represent the internal state of an instance of our class.
 
@@ -68,11 +68,11 @@ account.customer_name = "JuNiPeRo D. sErRa"
 account.customer_name
 # => "JUNIPERO D. SERRA"
 ```
-*Figure 4*. A customize writer method that converts a value to all caps before assigning it.
+*Figure 4*. A customized writer method that converts a value to all caps before assigning it.
 
 We might want to do something similar in a writer method.  We could choose that customer names should be stored in all caps.  If we then choose to make the customer name attribute writable, we might need to clean a new value before assigning it to our object (see Figure 4).
 
-Let's modify our `BankAccount` class to have the behaviors described above.  As we're changing the behavior of our classes, our tests will need to be updated to match.  
+Let's modify our `BankAccount` class to have the behaviors described above.  As we're changing the behavior of our class, our tests will need to be updated to match.  
 
 
 ## Conclusion
