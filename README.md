@@ -75,7 +75,11 @@ We might want to do something similar in a writer method.  We could choose that 
 Let's modify our `BankAccount` class to have the behaviors described above.  As we're changing the behavior of our classes, our tests will need to be updated to match.  
 
 
-##Resources
+## Conclusion
+We always want to be intentional in the design decisions that we make.  When we create a public interface for our objects, we're defining how other programmers will use the classes that we're creating, and once that interface is established, we won't want to change it without good reason.  
+
+Consider what would happen if Ruby's `Array` class's interface changed, and the shovel operator (`<<`) was removed.  How many applications would break?  We write code expecting that the shovel operator will be there.  Similarly, as we begin writing code that other developers use, they will rely on the interfaces we create being stable.
+
 
 [accessor challenge]: ../../../ruby-drill-accessor-methods-challenge
 [blog post]: http://culttt.com/2015/06/03/the-difference-between-public-protected-and-private-methods-in-ruby/
