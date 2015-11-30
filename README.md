@@ -50,7 +50,7 @@ We might ask ourselves ... would we ever need to change the name associated with
 Remember, our object's public interface defines what an object does, and we'll want to document that behavior in tests.
 
 
-### Release 2:  Customized Attribute Values
+### Release 2:  Customized Readers and Writers
 Standard reader methods will return the value of an attribute.  Writer methods will update the value of an attribute.  But, we can also customize accessor methods.
 
 ```ruby
