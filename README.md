@@ -1,19 +1,33 @@
-# Design Drill Public Vs Private Interfaces
+# Designing an Object's Interface
 
-##Learning Competencies
+## Summary
+Objects have internal data or state, which we refer to as the object's attributes (e.g., an age, a name, etc.).  And, we can create accessor methods that allow an object to share the values of its attributes or that allow an object to have its attributes overwritten (see [challenge][accessor challenge]).  How do we know if we should make an object's attributes readable, writable, or both?
 
-* Use instance variables and accessor methods effectively
-* Work with objects in Ruby
+A central component of good object-oriented design is understanding how much of an object to *expose*.  Exposing an object means making its attributes *public*—in other words, making the object's internal data available to other objects in our program.
 
-##Summary
+As a general rule, we should only expose an object as much as is necessary for our application to function.  If our application can function without exposing an attribute, don't create the reader and writer methods.  In other words, we only write code that we need.  To explore this principle, let's build a `BankAccount` class that stores information about a bank account and selectively reveals some of it.
 
- A central component of good object-oriented design is understanding how much of an object to *expose*.
 
-*Exposing* an object means making its properties (internal data) available to the "public", i.e. other objects in the program or even other programs. Together, these public methods make up an object's **public interface**. The methods which are private (accessible only within the object itself) make up its **private interface**.
+### Public and Private Interfaces
+```ruby
+aisha = Person.new(name: "Aisha", email: "aisha@domain.com")
+# => #<Person:0x000001011f5638 @name="Aisha", @email="aisha@domain.com">
+aisha.name
+# => "Aisha"
 
-As a general rule, you should only expose as much of an object as is needed for other objects to interact with it. Design objects that can take care of their own properties. They shouldn't just invite everyone else in to mess around with their business.
+"some string".reverse
+# => "gnirts emos"
+```  
+*Figure 1*.  Calling methods on objects, using methods from their public interfaces.
 
-To play with this principle, let's build a simple `BankAccount` class that stores information about a bank account.
+We can think of methods to which an object responds as messages that it understands.  When we create a reader methods that returns an object's name attribute, it's equivalent to being able to send the object a message asking for its name.  The same is true for any method that we call on an object—whether that's asking a person object for its name or asking a string to reverse itself (see Figure 1).
+
+Together, all the methods that we can call on an object make up the object's *public interface*, or the messages we can send to the object.  This interface expresses to other developers using our code the behaviors they can expect to rely on—in other words, *what* our object does.  For example, ask a person object for its name, and it will return a string.
+
+Objects can also have a *private interface*—methods accessible only within the object itself.  Private methods are important for *how* an object does what it does; they help an object carry out its responsibilities.  For example, we might create private methods as we refactor a public method, extracting some of its behavior into smaller, more-focused private methods.  
+
+This [blog post][] provides a description of public and private methods, as well as a walk through for defining methods as private.
+
 
 ##Releases
 
@@ -82,3 +96,6 @@ How would you get around this problem?  What kind of method can you define that 
 And, of course, you know what's coming... write tests!
 
 ##Resources
+
+[accessor challenge]: ../../../ruby-drill-accessor-methods-challenge
+[blog post]: http://culttt.com/2015/06/03/the-difference-between-public-protected-and-private-methods-in-ruby/
